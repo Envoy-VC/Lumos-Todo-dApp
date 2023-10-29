@@ -7,7 +7,7 @@ import {
 	trustWallet,
 	localWallet,
 } from '@thirdweb-dev/react';
-import { Ethereum, Polygon } from '@thirdweb-dev/chains';
+import { Ethereum, Polygon, Mumbai, Sepolia } from '@thirdweb-dev/chains';
 
 // Metadata
 import { dAppMetadata } from 'config';
@@ -24,8 +24,8 @@ const Web3Provider = ({ children }: Props) => {
 	return (
 		<ThirdwebProvider
 			clientId={NEXT_PUBLIC_TW_CLIENT_ID}
-			activeChain={Ethereum}
-			supportedChains={[Ethereum, Polygon]}
+			activeChain={Mumbai}
+			supportedChains={[Ethereum, Polygon, Mumbai, Sepolia]}
 			dAppMeta={dAppMetadata}
 			supportedWallets={[
 				metamaskWallet(),

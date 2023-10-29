@@ -20,7 +20,6 @@ const Navbar = () => {
 					<ConnectWallet
 						btnTitle='Connect'
 						theme={!!theme && theme === 'dark' ? 'dark' : 'light'}
-						className='!bg-blue-500 !p-3 !text-white'
 					/>
 				</div>
 			</div>
