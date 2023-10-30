@@ -4,7 +4,7 @@ import { ConnectWallet } from '@thirdweb-dev/react';
 import ThemeSwitcher from '../theme-switcher';
 
 // Icons
-import { PiAirplaneTakeoffDuotone } from 'react-icons/pi';
+import { TbCheckupList } from 'react-icons/tb';
 
 const Navbar = () => {
 	const { theme } = useTheme();
@@ -12,8 +12,8 @@ const Navbar = () => {
 		<div className='p-4 px-6'>
 			<div className='flex flex-row items-center justify-between'>
 				<div className='flex flex-row items-center gap-2'>
-					<PiAirplaneTakeoffDuotone className='text-4xl text-blue-500' />
-					<div className='hidden text-2xl font-bold sm:flex'>Starter Template</div>
+					<TbCheckupList className='text-4xl text-blue-500' />
+					<div className='hidden text-2xl font-bold sm:flex'>Todo App</div>
 				</div>
 				<div className='flex flex-row items-center gap-2'>
 					<ThemeSwitcher />

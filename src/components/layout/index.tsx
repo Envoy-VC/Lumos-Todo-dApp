@@ -20,17 +20,17 @@ interface Props {
 const Layout = ({ children }: Props) => {
 	return (
 		<ThemeProvider attribute='class' enableSystem={false}>
-			<AntDesignConfigProvider>
-				<Web3Provider>
-					<NotificationProvider>
+			<SEO />
+			<Web3Provider>
+				<NotificationProvider>
+					<AntDesignConfigProvider>
 						<div className={clsx(inter.className)}>
-							<SEO />
 							<Navbar />
 							{children}
 						</div>
-					</NotificationProvider>
-				</Web3Provider>
-			</AntDesignConfigProvider>
+					</AntDesignConfigProvider>
+				</NotificationProvider>
+			</Web3Provider>
 		</ThemeProvider>
 	);
 };
