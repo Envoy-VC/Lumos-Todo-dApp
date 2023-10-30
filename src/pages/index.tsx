@@ -4,24 +4,19 @@ import { Layout } from '~/components';
 import type { NextPageWithLayout } from './_app';
 
 import { useAddress, useContract, useContractRead } from '@thirdweb-dev/react';
-import { Button } from 'antd';
+import { Button, Spin } from 'antd';
 import { TodoCard, NewTodo } from '~/components';
-import { ABI } from '~/utils';
+import { ABI, CONTRACT_ADDRESS } from '~/utils';
 import type { BigNumber } from 'ethers';
 
 const Home: NextPageWithLayout = () => {
 	const address = useAddress();
-
-	const { contract } = useContract(
-		'0x3a3bd560198fCD376f852fE7E3846CFa3e9e6cd9',
-		ABI
-	);
-
-	const [open, setOpen] = React.useState<boolean>(false);
-
+	const { contract } = useContract(CONTRACT_ADDRESS, ABI);
 	const { data } = useContractRead(contract, 'todoIndex', [address]) as {
 		data: BigNumber;
 	};
+
+	const [open, setOpen] = React.useState<boolean>(false);
 
 	if (!address) {
 		return (
@@ -56,7 +51,9 @@ const Home: NextPageWithLayout = () => {
 			);
 		else
 			return (
-				<div className='flex h-screen justify-center p-4 sm:p-24'>loading</div>
+				<div className='flex h-screen justify-center p-4 sm:p-24'>
+					<Spin />
+				</div>
 			);
 	}
 };

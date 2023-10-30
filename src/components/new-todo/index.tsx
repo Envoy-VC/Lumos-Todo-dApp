@@ -2,7 +2,7 @@ import React from 'react';
 import { useContract, useContractWrite, useSDK } from '@thirdweb-dev/react';
 import { Modal, Input, Button } from 'antd';
 
-import { ABI } from '~/utils';
+import { ABI, CONTRACT_ADDRESS } from '~/utils';
 
 interface Props {
 	open: boolean;
@@ -10,17 +10,13 @@ interface Props {
 }
 
 const NewTodo = ({ open, setOpen }: Props) => {
+	const sdk = useSDK();
+	const { contract } = useContract(CONTRACT_ADDRESS, ABI);
+	const { mutateAsync } = useContractWrite(contract, 'addTodo');
+
 	const [title, setTitle] = React.useState<string>('');
 	const [description, setDescription] = React.useState<string>('');
-
 	const [isUploading, setIsUploading] = React.useState<boolean>(false);
-	const sdk = useSDK();
-	const { contract } = useContract(
-		'0x3a3bd560198fCD376f852fE7E3846CFa3e9e6cd9',
-		ABI
-	);
-
-	const { mutateAsync } = useContractWrite(contract, 'addTodo');
 
 	const onClose = () => {
 		setOpen(false);
@@ -47,6 +43,8 @@ const NewTodo = ({ open, setOpen }: Props) => {
 			setIsUploading(false);
 		}
 	};
+
+	
 	return (
 		<Modal
 			title='New Todo'

@@ -6,8 +6,9 @@ import {
 	useContractWrite,
 	useSDK,
 } from '@thirdweb-dev/react';
-import { ABI } from '~/utils';
+import { ABI, CONTRACT_ADDRESS } from '~/utils';
 import { Button } from 'antd';
+
 // Icons
 import { PiCheckCircleBold } from 'react-icons/pi';
 
@@ -30,28 +31,24 @@ interface Props {
 const TodoCard = ({ id }: Props) => {
 	const address = useAddress();
 	const sdk = useSDK();
-	const { contract } = useContract(
-		'0x3a3bd560198fCD376f852fE7E3846CFa3e9e6cd9',
-		ABI
-	);
+	const { contract } = useContract(CONTRACT_ADDRESS, ABI);
 	const { data } = useContractRead(contract, 'todosForOwner', [address, id]) as {
 		data: TodoItem | undefined;
 	};
-	const { mutateAsync } = useContractWrite(contract, 'markAsComplete');
+	const { mutateAsync, isLoading } = useContractWrite(
+		contract,
+		'markAsComplete'
+	);
 
 	const [metadata, setMetadata] = React.useState<Metadata | null>(null);
-	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
 	const onMarkAsComplete = async () => {
 		try {
-			setIsLoading(true);
 			await mutateAsync({
 				args: [id],
 			});
 		} catch (error) {
 			console.log(error);
-		} finally {
-			setIsLoading(false);
 		}
 	};
 
@@ -70,7 +67,7 @@ const TodoCard = ({ id }: Props) => {
 
 	if (data && metadata)
 		return (
-			<div className='flex flex-col sm:flex-row items-center justify-between rounded-md border-[1px] border-gray-300 p-4 gap-4'>
+			<div className='flex flex-col items-center justify-between gap-4 rounded-md border-[1px] border-gray-300 p-4 sm:flex-row'>
 				<div className='flex flex-col'>
 					<div className='text-xl'>
 						<span className='font-semibold'>Title: </span>
