@@ -22,7 +22,7 @@ const Web3Provider = ({ children }: Props) => {
 	return (
 		<ThirdwebProvider
 			clientId={NEXT_PUBLIC_TW_CLIENT_ID}
-			activeChain={Mumbai}
+			activeChain={Sepolia}
 			supportedChains={[Ethereum, Polygon, Mumbai, Sepolia]}
 			dAppMeta={dAppMetadata}
 			supportedWallets={[metamaskWallet(), coinbaseWallet(), localWallet()]}
