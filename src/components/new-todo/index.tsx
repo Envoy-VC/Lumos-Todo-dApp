@@ -1,5 +1,11 @@
 import React from 'react';
-import { useContract, useContractWrite, useSDK } from '@thirdweb-dev/react';
+import {
+	useContract,
+	useContractWrite,
+	useSDK,
+	useSwitchChain,
+} from '@thirdweb-dev/react';
+import { Sepolia } from '@thirdweb-dev/chains';
 import { Modal, Input, Button } from 'antd';
 
 import { ABI, CONTRACT_ADDRESS } from '~/utils';
@@ -11,6 +17,7 @@ interface Props {
 
 const NewTodo = ({ open, setOpen }: Props) => {
 	const sdk = useSDK();
+	const switchChain = useSwitchChain();
 	const { contract } = useContract(CONTRACT_ADDRESS, ABI);
 	const { mutateAsync } = useContractWrite(contract, 'addTodo');
 
@@ -25,6 +32,7 @@ const NewTodo = ({ open, setOpen }: Props) => {
 	const onAdd = async () => {
 		if (title === '' || description === '') return;
 		try {
+			await switchChain(Sepolia.chainId);
 			setIsUploading(true);
 			const metadata = {
 				title,
@@ -44,7 +52,6 @@ const NewTodo = ({ open, setOpen }: Props) => {
 		}
 	};
 
-	
 	return (
 		<Modal
 			title='New Todo'

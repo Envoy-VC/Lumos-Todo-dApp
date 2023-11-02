@@ -5,7 +5,9 @@ import {
 	useContractRead,
 	useContractWrite,
 	useSDK,
+	useSwitchChain,
 } from '@thirdweb-dev/react';
+import { Sepolia } from '@thirdweb-dev/chains';
 import { ABI, CONTRACT_ADDRESS } from '~/utils';
 import { Button } from 'antd';
 
@@ -29,8 +31,9 @@ interface Props {
 }
 
 const TodoCard = ({ id }: Props) => {
-	const address = useAddress();
 	const sdk = useSDK();
+	const address = useAddress();
+	const switchChain = useSwitchChain();
 	const { contract } = useContract(CONTRACT_ADDRESS, ABI);
 	const { data } = useContractRead(contract, 'todosForOwner', [address, id]) as {
 		data: TodoItem | undefined;
@@ -44,6 +47,7 @@ const TodoCard = ({ id }: Props) => {
 
 	const onMarkAsComplete = async () => {
 		try {
+			await switchChain(Sepolia.chainId);
 			await mutateAsync({
 				args: [id],
 			});
