@@ -21,7 +21,7 @@ const Home: NextPageWithLayout = () => {
 	if (!address) {
 		return (
 			<div className='p-16 text-center text-lg font-semibold'>
-				Connect Wallet to se your Todo
+				Connect Wallet to see your Todos
 			</div>
 		);
 	} else {
